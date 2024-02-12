@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Update from './Update';
-
+import { Form } from 'react-bootstrap';
+import { HiArrowNarrowUp, HiArrowNarrowDown } from "react-icons/hi";
 
 
 const StudentTable = () => {
@@ -30,7 +31,7 @@ const StudentTable = () => {
         };
         fetchStudent();
 
-    }, [currentPage,searchTerm]);
+    }, [currentPage, searchTerm]);
 
     const getStudent = async () => {
         // const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student`);
@@ -67,7 +68,7 @@ const StudentTable = () => {
         fetchStudent(id);
     }
 
-    
+
     const handleDelete = async (id) => {
         console.log(id);
         try {
@@ -105,22 +106,31 @@ const StudentTable = () => {
     return (
         <div className='col-md-12'>
             <div className='mb-2 mt-2'>
-                <div >
-                    <input type="text" className='input' value={searchTerm} onChange={handleSearch} placeholder="Search..." />
-                </div>
-                {updatedStudent && isModalOpen ? (
 
-                    <Update
-                        studentId={updatedStudent.id}
-                        setIsModalOpen={setIsModalOpen}
-                    // onUpdate={handleUpdateData}
-                    />
-                ) :
-                    <Link to="/form">
-                        <button className='btn btn-primary'> Create New</button>
-                    </Link>
-                }
+
+                <div style={{ margin: '20px' }}>
+                    <Form.Control type="text" placeholder="Search..." value={searchTerm} onChange={handleSearch} />
+                </div>
+
+                <div>
+                    {/* <button className='btn btn-primary mr-2 ml-2'><HiArrowNarrowUp /></button>
+                    <button className='btn btn-primary mr-2 ml-2'><HiArrowNarrowDown /></button> */}
+                    <HiArrowNarrowUp /> <HiArrowNarrowDown />
+                </div>
             </div>
+
+            {updatedStudent && isModalOpen ? (
+                <Update
+                    studentId={updatedStudent.id}
+                    setIsModalOpen={setIsModalOpen}
+
+                />
+            ) :
+                <Link to="/form">
+                    <button className='btn btn-primary'> Create New</button>
+                </Link>
+            }
+
             {student && (
                 <table className='table table-bordered table-striped'>
                     <thead>
