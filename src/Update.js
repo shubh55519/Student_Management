@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function Update({ studentId, setIsOpenModal }) {
+function Update({ studentId,setIsOpenModal }) {
     console.log(studentId)
 
     const [name, setName] = useState('');
@@ -10,11 +10,11 @@ function Update({ studentId, setIsOpenModal }) {
     const [email, setEmail] = useState('');
     const [dob, setDob] = useState('');
     const [photoUrl, setPhotoUrl] = useState('');
-    // const [studentId, setStudentId] = useState([]);
+    
     const navigate = useNavigate();
 
 
-    console.log("studentId->", studentId, setIsOpenModal)
+    console.log("studentId->", studentId,)
     console.log(name, address, email, dob, photoUrl)
 
     useEffect(() => {
@@ -26,7 +26,7 @@ function Update({ studentId, setIsOpenModal }) {
 
             } catch (error) {
                 console.error('Error editing resource:', error);
-                // Handle error gracefully, e.g., display an error message
+                
             }
         }
         fetchStudent(studentId)
