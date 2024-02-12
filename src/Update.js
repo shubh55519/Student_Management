@@ -17,17 +17,36 @@ function Update({ studentId, setIsOpenModal }) {
     console.log("studentId->", studentId, setIsOpenModal)
     console.log(name, address, email, dob, photoUrl)
 
-    
+    useEffect(() => {
+        const fetchStudent = async (studentId) => {
+
+            try {
+                const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student/${studentId}`);
+                console.log(response.data);
+
+            } catch (error) {
+                console.error('Error editing resource:', error);
+                // Handle error gracefully, e.g., display an error message
+            }
+        }
+        fetchStudent(studentId)
+    }, [studentId])
+
 
     const handleUpdate = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.put(`https://60e953c2673e350017c219b1.mockapi.io/student/${studentId}`, {
-                name: name,
-                address: address,
-                dob: dob,
-                email: email,
-                photoUrl: photoUrl
+                // name: name,
+                // address: address,
+                // dob: dob,
+                // email: email,
+                // photoUrl: photoUrl
+                name: setName,
+                address: setAddress,
+                dob: setDob,
+                email: setEmail,
+                photoUrl: setPhotoUrl
             });
             console.log(response.data);
             // Log the response data if needed

@@ -11,12 +11,14 @@ const StudentTable = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [updatedStudent, setUpdatedStudent] = useState([])
+    const [searchTerm, setSearchTerm] = useState('');
+
     useEffect(() => {
         const fetchStudent = async () => {
-            const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student`);
-            console.log(response)
+            // const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student`);
+            // console.log(response)
             try {
-                const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student?page=${currentPage}&limit=10`);
+                const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student?page=${currentPage}&limit=10&search=${searchTerm}`);
                 const data = response.data;
                 console.log(data);
                 console.log(response.data.length);
@@ -28,13 +30,13 @@ const StudentTable = () => {
         };
         fetchStudent();
 
-    }, [currentPage]);
+    }, [currentPage,searchTerm]);
 
     const getStudent = async () => {
-        const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student`);
-        console.log(response)
+        // const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student`);
+        // console.log(response)
         try {
-            const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student?page=${currentPage}&limit=10`);
+            const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student`);
             const data = response.data;
             console.log(data);
             console.log(response.data.length);
@@ -46,21 +48,6 @@ const StudentTable = () => {
     };
 
 
-    const handleDelete = async (id) => {
-        console.log(id);
-        try {
-            const response = axios.delete(`https://60e953c2673e350017c219b1.mockapi.io/student/${id}`)
-                // .then((response) => console.log(response.data))
-                .then(() => {
-                    console.log(response.data);
-                    alert("Deleted Successfully")
-                    getStudent();
-                })
-            // setStudent(response.data)
-        } catch (error) {
-            console.error('Error deleting resource:', error);
-        }
-    }
     const handleEdit = (id) => {
         setIsModalOpen(true)
         const fetchStudent = async (id) => {
@@ -80,6 +67,23 @@ const StudentTable = () => {
         fetchStudent(id);
     }
 
+    
+    const handleDelete = async (id) => {
+        console.log(id);
+        try {
+            const response = axios.delete(`https://60e953c2673e350017c219b1.mockapi.io/student/${id}`)
+                // .then((response) => console.log(response.data))
+                .then(() => {
+                    console.log(response.data);
+                    alert("Deleted Successfully")
+                    getStudent();
+                })
+            // setStudent(response.data)
+        } catch (error) {
+            console.error('Error deleting resource:', error);
+        }
+    }
+
     const handlePrevPage = (e) => {
         e.preventDefault();
         if (currentPage > 1) {
@@ -94,11 +98,18 @@ const StudentTable = () => {
         }
     };
 
+    const handleSearch = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
     return (
         <div className='col-md-12'>
             <div className='mb-2 mt-2'>
+                <div >
+                    <input type="text" className='input' value={searchTerm} onChange={handleSearch} placeholder="Search..." />
+                </div>
                 {updatedStudent && isModalOpen ? (
-                    
+
                     <Update
                         studentId={updatedStudent.id}
                         setIsModalOpen={setIsModalOpen}
