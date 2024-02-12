@@ -1,25 +1,25 @@
-import logo from './logo.svg';
+import React from 'react'
+// import StudentTable from './StudentTable';
+import Home from './Home';
+// import Pagination from './Filter&Pagination';
+import { Route, Routes } from 'react-router-dom';
+import Form from './Form';
 import './App.css';
+import Update from './Update';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/form' element={<Form />} />
+        <Route path='/update' element={<Update />} />
+        {/* <Route path='/studenttable' element={} /> */}
+
+        {/* <Pagination/> */}
+      </Routes>
     </div>
-  );
+  )
 }
 
 export default App;
