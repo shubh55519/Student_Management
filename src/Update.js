@@ -4,17 +4,15 @@ import { useNavigate } from 'react-router-dom';
 
 function Update({ studentId, setIsModalOpen }) {
     console.log(studentId, setIsModalOpen)
-
+    console.log("studentId->", studentId,)
+     
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [email, setEmail] = useState('');
     const [dob, setDob] = useState('');
     const [avatar, setAvatar] = useState('');
-
     const navigate = useNavigate();
 
-
-    console.log("studentId->", studentId,)
     console.log(name, address, email, dob, avatar)
 
     useEffect(() => {
@@ -37,7 +35,7 @@ function Update({ studentId, setIsModalOpen }) {
         }
         fetchStudent(studentId)
 
-    }, [studentId])
+    }, [])
 
     const handleUpdate = async (e) => {
         e.preventDefault();

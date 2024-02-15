@@ -96,6 +96,7 @@ const StudentTable = () => {
         // e.preventDefault();
         setIsSorted(true);
         setIsSortedDecs(!isSortedDecs);
+        console.log(isSortedDecs)
         const fetchStudent = async (sort, order) => {
             // const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student`);
             console.log(sort, order)

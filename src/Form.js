@@ -2,24 +2,31 @@ import axios from 'axios'
 // import React, { useState } from 'react'
 import Navbar from './Navbar';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 // import 'form.css';
 
-function Form({ name, address, dob, email, photoUrl, setAddress, setDob, setEmail, setName, setPhotoUrl }) {
-  console.log(name, address, dob, email, photoUrl)
+function Form() {
+
+  const [name, setName] = useState('');
+    const [address, setAddress] = useState('');
+    const [email, setEmail] = useState('');
+    const [dob, setDob] = useState('');
+    const [avatar, setAvatar] = useState('');
+  console.log(name, address, dob, email, avatar)
   
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log(`Submitted: Name: ${name}, Address: ${address}, Email: ${email}, DOB: ${dob}, Photo URL: ${photoUrl}`)
+    console.log(`Submitted: Name: ${name}, Address: ${address}, Email: ${email}, DOB: ${dob}, avatar: ${avatar}`)
     
     axios.post(`https://60e953c2673e350017c219b1.mockapi.io/student`, {
       name: name,
       address: address,
       email: email,
       dob: dob,
-      photoUrl: photoUrl
+      avatar: avatar
     }).then((response) => {
       navigate('/')
       console.log(response)
@@ -29,7 +36,7 @@ function Form({ name, address, dob, email, photoUrl, setAddress, setDob, setEmai
     setAddress("")
     setEmail("")
     setDob("")
-    setPhotoUrl("")
+    setAvatar("")
   }
 
   return (
@@ -71,12 +78,12 @@ function Form({ name, address, dob, email, photoUrl, setAddress, setDob, setEmai
             onChange={(e) => setDob(e.target.value)}
             required
           />
-          <label htmlFor="photoUrl">Photo URL:</label>
+          <label htmlFor="avatar">Photo URL:</label>
           <input
             type="url"
-            id="photoUrl"
-            value={photoUrl}
-            onChange={(e) => setPhotoUrl(e.target.value)}
+            id="avatar"
+            value={avatar}
+            onChange={(e) => setAvatar(e.target.value)}
             required
           />
           <button type="submit">Submit</button>
