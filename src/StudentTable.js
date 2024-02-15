@@ -148,7 +148,7 @@ const StudentTable = () => {
                         <tr>
                             <th onClick={() => handleSort("id", "asc")}>ID {isSorted ? <span>{isSortedDecs ? <HiArrowNarrowUp /> : <HiArrowNarrowDown />}</span> : ""}</th>
                             <th>Photo</th>
-                            <th onClick={() => handleSort("name", "asc")}>Name{isSorted ? <span>{isSortedDecs ? <HiArrowNarrowUp /> : <HiArrowNarrowDown />}</span> : ""</th>
+                            <th onClick={() => handleSort("name", "asc")}>Name{isSorted ? <span>{isSortedDecs ? <HiArrowNarrowUp /> : <HiArrowNarrowDown />}</span> : ""}</th>
                             <th>Email</th>
                             <th>Edit</th>
                             <th>Delete</th>
