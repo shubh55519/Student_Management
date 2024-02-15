@@ -46,7 +46,6 @@ const StudentTable = () => {
         }
     };
 
-
     const handleEdit = (id) => {
         setIsModalOpen(true)
         const fetchStudent = async (id) => {
@@ -93,26 +92,33 @@ const StudentTable = () => {
         setSearchTerm(e.target.value);
     };
 
-    const handleSort = (e) => {
-        e.preventDefault();
+    const handleSort = (sort, order) => {
+        // e.preventDefault();
         setIsSorted(true);
         setIsSortedDecs(!isSortedDecs);
         const fetchStudent = async (sort, order) => {
             // const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student`);
             console.log(sort, order)
             try {
-                const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student?page=${currentPage}&limit=10?sortBy=${sort}&order=${order}`);
+                const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student?page=${currentPage}&limit=10&sortBy=${sort}&order=${order}`);
                 console.log(sort, order)
                 console.log(response.data);
                 console.log(response.data.length);
-                const sortedStudent = response.data.sort((a, b) => a.sort.localeCompare(b.sort));
-                console.log(sortedStudent);
-                setStudent(response.data);
+                if (sort === "id") {
+                    const sortedStudent = response.data.sort((a, b) => a.sort - b.sort);
+                    console.log(sortedStudent);
+                    setStudent(response.data);
+                }
+                if (sort === "name") {
+                    const sortedStudent = response.data.sort((a, b) => a.name.localeCompare(b.name));
+                    console.log(sortedStudent);
+                    setStudent(response.data);
+                }
             } catch (error) {
                 console.error('Error fetching student by ID:', error);
             }
         };
-        fetchStudent('title', 'desc');
+        fetchStudent(sort, order);
     }
 
     return (
@@ -140,9 +146,9 @@ const StudentTable = () => {
                 <table className='table table-bordered table-striped'>
                     <thead>
                         <tr>
-                            <th onClick={handleSort}>ID {isSorted ? <span>{isSortedDecs ? <HiArrowNarrowUp /> : <HiArrowNarrowDown />}</span> : ""}</th>
+                            <th onClick={() => handleSort("id", "asc")}>ID {isSorted ? <span>{isSortedDecs ? <HiArrowNarrowUp /> : <HiArrowNarrowDown />}</span> : ""}</th>
                             <th>Photo</th>
-                            <th>Name</th>
+                            <th onClick={() => handleSort("name", "asc")}>Name</th>
                             <th>Email</th>
                             <th>Edit</th>
                             <th>Delete</th>
