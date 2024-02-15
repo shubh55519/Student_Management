@@ -5,7 +5,6 @@ import Update from './Update';
 import { Form } from 'react-bootstrap';
 import { HiArrowNarrowUp, HiArrowNarrowDown } from "react-icons/hi";
 
-
 const StudentTable = () => {
     const [student, setStudent] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
@@ -13,6 +12,8 @@ const StudentTable = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [updatedStudent, setUpdatedStudent] = useState([])
     const [searchTerm, setSearchTerm] = useState('');
+    const [isSorted, setIsSorted] = useState(false);
+    const [isSortedDecs, setIsSortedDecs] = useState(false);
 
     useEffect(() => {
         const fetchStudent = async () => {
@@ -20,27 +21,24 @@ const StudentTable = () => {
             // console.log(response)
             try {
                 const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student?page=${currentPage}&limit=10&search=${searchTerm}`);
-                const data = response.data;
-                console.log(data);
-                console.log(response.data.length);
-                setStudent(data);
+                // console.log(response.data);
+                // console.log(response.data.length);
+                setStudent(response.data);
                 setTotalPages(response.data.length)
             } catch (error) {
                 console.error('Error fetching student by ID:', error);
             }
         };
         fetchStudent();
-
     }, [currentPage, searchTerm]);
 
     const getStudent = async () => {
-        // const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student`);
-        // console.log(response)
+        // getStudent is made to use in handleDelete Function 
         try {
             const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student`);
             const data = response.data;
             console.log(data);
-            console.log(response.data.length);
+            // console.log(response.data.length);
             setStudent(data);
             setTotalPages(response.data.length)
         } catch (error) {
@@ -55,12 +53,8 @@ const StudentTable = () => {
             console.log(id)
             try {
                 const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student/${id}`);
-                // console.log(response)
-                const data = response.data;
-                console.log(data);
-                // console.log(response.data.length);
-                setUpdatedStudent(data);
-
+                console.log(response.data);
+                setUpdatedStudent(response.data);
             } catch (error) {
                 console.error('Error fetching student by ID:', error);
             }
@@ -68,17 +62,13 @@ const StudentTable = () => {
         fetchStudent(id);
     }
 
-
     const handleDelete = async (id) => {
         console.log(id);
         try {
-            const response = axios.delete(`https://60e953c2673e350017c219b1.mockapi.io/student/${id}`)
-                // .then((response) => console.log(response.data))
-                .then(() => {
-                    console.log(response.data);
-                    alert("Deleted Successfully")
-                    getStudent();
-                })
+            const response = await axios.delete(`https://60e953c2673e350017c219b1.mockapi.io/student/${id}`)
+            console.log(response.data);
+            alert("Deleted Successfully")
+            getStudent();
             // setStudent(response.data)
         } catch (error) {
             console.error('Error deleting resource:', error);
@@ -103,39 +93,54 @@ const StudentTable = () => {
         setSearchTerm(e.target.value);
     };
 
-    return (
-        <div className='col-md-12'>
-            <div className='mb-2 mt-2'>
-
-
-                <div style={{ margin: '20px' }}>
-                    <Form.Control type="text" placeholder="Search..." value={searchTerm} onChange={handleSearch} />
-                </div>
-
-                <div>
-                    {/* <button className='btn btn-primary mr-2 ml-2'><HiArrowNarrowUp /></button>
-                    <button className='btn btn-primary mr-2 ml-2'><HiArrowNarrowDown /></button> */}
-                    <HiArrowNarrowUp /> <HiArrowNarrowDown />
-                </div>
-            </div>
-
-            {updatedStudent && isModalOpen ? (
-                <Update
-                    studentId={updatedStudent.id}
-                    setIsModalOpen={setIsModalOpen}
-
-                />
-            ) :
-                <Link to="/form">
-                    <button className='btn btn-primary'> Create New</button>
-                </Link>
+    const handleSort = (e) => {
+        e.preventDefault();
+        setIsSorted(true);
+        setIsSortedDecs(!isSortedDecs);
+        const fetchStudent = async (sort, order) => {
+            // const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student`);
+            console.log(sort, order)
+            try {
+                const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student?page=${currentPage}&limit=10?sortBy=${sort}&order=${order}`);
+                console.log(sort, order)
+                console.log(response.data);
+                console.log(response.data.length);
+                const sortedStudent = response.data.sort((a, b) => a.sort.localeCompare(b.sort));
+                console.log(sortedStudent);
+                setStudent(response.data);
+            } catch (error) {
+                console.error('Error fetching student by ID:', error);
             }
+        };
+        fetchStudent('title', 'desc');
+    }
+
+    return (
+        // <div className='col-md-12'>
+        <div >
+            <div className='student-search-sort'>
+                {updatedStudent && isModalOpen ? (
+                    <Update
+                        studentId={updatedStudent.id}
+                        setIsModalOpen={setIsModalOpen}
+                    />
+                ) :
+                    <>
+                        <Form.Control type="text" style={{ margin: '20px' }} placeholder="Search..." value={searchTerm} onChange={handleSearch} />
+                        <span>
+                            <Link to="/form">
+                                <button className='btn btn-primary'> Create New</button>
+                            </Link>
+                        </span>
+                    </>
+                }
+            </div>
 
             {student && (
                 <table className='table table-bordered table-striped'>
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th onClick={handleSort}>ID {isSorted ? <span>{isSortedDecs ? <HiArrowNarrowUp /> : <HiArrowNarrowDown />}</span> : ""}</th>
                             <th>Photo</th>
                             <th>Name</th>
                             <th>Email</th>
@@ -146,7 +151,7 @@ const StudentTable = () => {
                     <tbody>
                         {student.map(student => (
                             <tr key={student.id}>
-                                {console.log(currentPage, totalPages, student.length)}
+                                {/* {console.log(currentPage, totalPages, student.length)} */}
                                 <td>{student.id}</td>
                                 <td><img src={student.avatar} alt='avatar' height={40} width={70} /></td>
                                 <td>{student.name}</td>
