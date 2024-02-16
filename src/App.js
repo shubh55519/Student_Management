@@ -8,13 +8,13 @@ import Update from './Update';
 function App() {
   return (
     <>
-      <StrictMode>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/form' element={<Form />} />
-          <Route path='/update' element={<Update />} />
-        </Routes>
-      </StrictMode>
+
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/form' element={<Form />} />
+        <Route path='/update' element={<Update />} />
+      </Routes>
+
     </>
   )
 }

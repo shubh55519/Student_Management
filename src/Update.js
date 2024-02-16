@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Update({ studentId, setIsModalOpen }) {
-    console.log(studentId, setIsModalOpen)
-    console.log("studentId->", studentId,)
+    console.log("studentId->", studentId, "setIsModalOpen->",setIsModalOpen)
+    
      
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
@@ -16,11 +16,12 @@ function Update({ studentId, setIsModalOpen }) {
     console.log(name, address, email, dob, avatar)
 
     useEffect(() => {
+        console.log(studentId)
         const fetchStudent = async (studentId) => {
-
+            console.log(studentId)
             try {
                 const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student/${studentId}`);
-                // console.log(response.data);
+                console.log(response.data);
                 const { name, address, email, dob, avatar } = response.data
                 // console.log(name, address, email, dob, avatar)
                 setName(name);
@@ -35,7 +36,7 @@ function Update({ studentId, setIsModalOpen }) {
         }
         fetchStudent(studentId)
 
-    }, [])
+    }, [studentId])
 
     const handleUpdate = async (e) => {
         e.preventDefault();

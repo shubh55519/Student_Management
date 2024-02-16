@@ -14,7 +14,8 @@ const StudentTable = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [isSorted, setIsSorted] = useState(false);
     const [isSortedDecs, setIsSortedDecs] = useState(false);
-
+    console.log(updatedStudent)
+    
     useEffect(() => {
         const fetchStudent = async () => {
             // const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student`);
@@ -48,17 +49,18 @@ const StudentTable = () => {
 
     const handleEdit = (id) => {
         setIsModalOpen(true)
-        const fetchStudent = async (id) => {
+        const fetchStudent = async () => {
             console.log(id)
             try {
                 const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student/${id}`);
                 console.log(response.data);
+                console.log(response.data.length);
                 setUpdatedStudent(response.data);
             } catch (error) {
                 console.error('Error fetching student by ID:', error);
             }
         };
-        fetchStudent(id);
+        fetchStudent();
     }
 
     const handleDelete = async (id) => {
@@ -127,6 +129,7 @@ const StudentTable = () => {
         <div >
             <div className='student-search-sort'>
                 {updatedStudent && isModalOpen ? (
+                    // console.log(updatedStudent.id, isModalOpen)
                     <Update
                         studentId={updatedStudent.id}
                         setIsModalOpen={setIsModalOpen}
