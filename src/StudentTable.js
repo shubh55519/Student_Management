@@ -49,18 +49,19 @@ const StudentTable = () => {
 
     const handleEdit = (id) => {
         setIsModalOpen(true)
-        const fetchStudent = async () => {
-            console.log(id)
-            try {
-                const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student/${id}`);
-                console.log(response.data);
-                console.log(response.data.length);
-                setUpdatedStudent(response.data);
-            } catch (error) {
-                console.error('Error fetching student by ID:', error);
-            }
-        };
-        fetchStudent();
+        setUpdatedStudent(id);
+        // const fetchStudent = async () => {
+        //     console.log(id)
+        //     try {
+        //         const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student/${id}`);
+        //         console.log(response.data);
+        //         console.log(response.data.length);
+        //         setUpdatedStudent(response.data);
+        //     } catch (error) {
+        //         console.error('Error fetching student by ID:', error);
+        //     }
+        // };
+        // fetchStudent();
     }
 
     const handleDelete = async (id) => {
@@ -128,10 +129,10 @@ const StudentTable = () => {
         // <div className='col-md-12'>
         <div >
             <div className='student-search-sort'>
-                {updatedStudent && isModalOpen ? (
-                    // console.log(updatedStudent.id, isModalOpen)
+                { (updatedStudent && isModalOpen) ? (
+                    // console.log(updatedStudent, isModalOpen)
                     <Update
-                        studentId={updatedStudent.id}
+                        studentId={updatedStudent}
                         setIsModalOpen={setIsModalOpen}
                     />
                 ) :

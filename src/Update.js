@@ -17,13 +17,13 @@ function Update({ studentId, setIsModalOpen }) {
 
     useEffect(() => {
         console.log(studentId)
-        const fetchStudent = async (studentId) => {
+        const fetchStudent = async () => {
             console.log(studentId)
             try {
                 const response = await axios.get(`https://60e953c2673e350017c219b1.mockapi.io/student/${studentId}`);
                 console.log(response.data);
                 const { name, address, email, dob, avatar } = response.data
-                // console.log(name, address, email, dob, avatar)
+                console.log(name, address, email, dob, avatar)
                 setName(name);
                 setAddress(address);
                 setEmail(email);
@@ -34,7 +34,7 @@ function Update({ studentId, setIsModalOpen }) {
                 console.error('Error fetching student:', error);
             }
         }
-        fetchStudent(studentId)
+        fetchStudent()
 
     }, [studentId])
 
