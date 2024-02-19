@@ -1,7 +1,7 @@
 .main {
   box-sizing: border-box;
   background-color: white;
-  /* z-index: 2; */
+  z-index: -2;
 }
 .student-search-sort {
   display: flex;

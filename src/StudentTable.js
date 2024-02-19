@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Update from './Update';
-// import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { HiArrowNarrowUp, HiArrowNarrowDown } from "react-icons/hi";
 
 const StudentTable = () => {
@@ -118,7 +118,7 @@ const StudentTable = () => {
 
     return (
         // <div className='col-md-12'>
-        <div className={`${isModalOpen ? 'main' : ''}`} >
+        <div >
             <div className='student-search-sort'>
                 {/* Modal for editing data */}
                 {(updatedStudent && isModalOpen) ? (
@@ -130,18 +130,18 @@ const StudentTable = () => {
                 ) :
                     <div className='search-form'>
 
-                        <span className='form'>
-                            <Link to="/form">
-                                <button> Create New</button>
-                            </Link>
-                        </span>
 
-                        <input type="text" className='search' placeholder="Search..." value={searchTerm} onChange={handleSearch} />
+                        <Link to="/form">
+                            <Button className='mt-3'> Create New</Button>
+                        </Link>
+
+
+                        <Form.Control type="text" className='mb-3 mt-3' placeholder="Search..." value={searchTerm} onChange={handleSearch} />
                     </div>
                 }
             </div>
 
-            <div>
+            <div className={`${isModalOpen ? 'main' : ''}`} >
 
                 {student && (
                     <table className='table table-bordered table-striped'>
