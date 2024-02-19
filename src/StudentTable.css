@@ -1,5 +1,27 @@
+.main {
+  box-sizing: border-box;
+  background-color: white;
+  /* z-index: 2; */
+}
 .student-search-sort {
   display: flex;
   justify-content: space-evenly;
   margin: 20px;
+}
+.search-form {
+  display: flex;
+}
+.form button {
+  display: block;
+  width: 40%;
+  margin-left: 55%;
+  border-radius: 5px;
+  border-right: 3px solid;
+}
+.search {
+  display: block;
+  width: 40%;
+  margin-left: 55%;
+  border-radius: 5px;
+  border-right: 3px solid;
 }

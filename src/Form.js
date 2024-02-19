@@ -1,26 +1,25 @@
+import { useState } from 'react';
 import axios from 'axios'
-// import React, { useState } from 'react'
 import Navbar from './Navbar';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-// import 'form.css';
+import './Update.css';
 
 function Form() {
 
   const [name, setName] = useState('');
-    const [address, setAddress] = useState('');
-    const [email, setEmail] = useState('');
-    const [dob, setDob] = useState('');
-    const [avatar, setAvatar] = useState('');
+  const [address, setAddress] = useState('');
+  const [email, setEmail] = useState('');
+  const [dob, setDob] = useState('');
+  const [avatar, setAvatar] = useState('');
   console.log(name, address, dob, email, avatar)
-  
+
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     console.log(`Submitted: Name: ${name}, Address: ${address}, Email: ${email}, DOB: ${dob}, avatar: ${avatar}`)
-    
+
     axios.post(`https://60e953c2673e350017c219b1.mockapi.io/student`, {
       name: name,
       address: address,
@@ -40,9 +39,9 @@ function Form() {
   }
 
   return (
-    <>
+    < >
       <Navbar />
-      <div className='form-group'>
+      <div className='form-group Update-form-child'>
         <h1> Fill a new entry</h1>
         <form onSubmit={handleSubmit}>
 
@@ -54,6 +53,7 @@ function Form() {
             onChange={(e) => setName(e.target.value)}
             required
           />
+          <br/>
           <label htmlFor="address">Address:</label>
           <input
             type="text"
@@ -62,6 +62,7 @@ function Form() {
             onChange={(e) => setAddress(e.target.value)}
             required
           />
+          <br/>
           <label htmlFor="email">Email:</label>
           <input
             type="email"
@@ -70,6 +71,7 @@ function Form() {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
+          <br/>
           <label htmlFor="dob">DOB:</label>
           <input
             type="date"
@@ -78,6 +80,7 @@ function Form() {
             onChange={(e) => setDob(e.target.value)}
             required
           />
+          <br/>
           <label htmlFor="avatar">Photo URL:</label>
           <input
             type="url"
@@ -86,6 +89,7 @@ function Form() {
             onChange={(e) => setAvatar(e.target.value)}
             required
           />
+          <br/>
           <button type="submit">Submit</button>
         </form>
       </div>

@@ -1,11 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Update.css';
+
 
 function Update({ studentId, setIsModalOpen }) {
-    console.log("studentId->", studentId, "setIsModalOpen->",setIsModalOpen)
-    
-     
+    console.log("studentId->", studentId, "setIsModalOpen->", setIsModalOpen)
+
+
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [email, setEmail] = useState('');
@@ -16,7 +18,7 @@ function Update({ studentId, setIsModalOpen }) {
     console.log(name, address, email, dob, avatar)
 
     useEffect(() => {
-        console.log(studentId)
+        console.log(studentId)   
         const fetchStudent = async () => {
             console.log(studentId)
             try {
@@ -29,15 +31,16 @@ function Update({ studentId, setIsModalOpen }) {
                 setEmail(email);
                 setDob(dob);
                 setAvatar(avatar);
-                throw new Error("StudentId might undefined")
+                // throw new Error("StudentId might undefined")
             } catch (error) {
                 console.error('Error fetching student:', error);
             }
         }
-        fetchStudent()
-
+        fetchStudent()     
     }, [studentId])
-
+    
+    
+    
     const handleUpdate = async (e) => {
         e.preventDefault();
         try {
@@ -55,60 +58,72 @@ function Update({ studentId, setIsModalOpen }) {
             setDob('')
             setAddress('')
             setAvatar('')
+            // fetchStudent()
         } catch (error) {
             console.error('Error editing resource:', error);
         }
     };
-    
+
 
     return (
         <>
-            <h1>Update</h1>
-            <form onSubmit={handleUpdate}>
-                <div className='form-group'>
-                    <label htmlFor="name">Name:</label>
-                    <input
-                        type="text"
-                        id="name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                    />
-                    <label htmlFor="address">Address:</label>
-                    <input
-                        type="text"
-                        id="address"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                        required
-                    />
-                    <label htmlFor="email">Email:</label>
-                    <input
-                        type="email"
-                        id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                    <label htmlFor="dob">DOB:</label>
-                    <input
-                        type="date"
-                        id="dob"
-                        value={dob}
-                        onChange={(e) => setDob(e.target.value)}
-                        required
-                    />
-                    <label htmlFor="avatar">Photo URL:</label>
-                    <input
-                        type="url"
-                        id="avatar"
-                        value={avatar}
-                        onChange={(e) => setAvatar(e.target.value)}
-                        required
-                    />
-                    <button type="submit">Submit</button>
-                </div>
-            </form>
+            <div className='Update-form-child'>
+                <h1>Update</h1>
+                <form onSubmit={handleUpdate}>
+                    <div className='form-group '>
+                        <label htmlFor="name">Name:</label>
+                        <input
+                            type="text"
+                            id="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                        />
+                        <br />
+
+                        <label htmlFor="address">Address:</label>
+                        <input
+                            type="text"
+                            id="address"
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
+                            required
+                        />
+                        <br />
+
+                        <label htmlFor="email">Email:</label>
+                        <input
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                        <br />
+
+                        <label htmlFor="dob">DOB:</label>
+                        <input
+                            type="date"
+                            id="dob"
+                            value={dob}
+                            onChange={(e) => setDob(e.target.value)}
+                            required
+                        />
+                        <br />
+
+                        <label htmlFor="avatar">Photo URL:</label>
+                        <input
+                            type="url"
+                            id="avatar"
+                            value={avatar}
+                            onChange={(e) => setAvatar(e.target.value)}
+                            required
+                        />
+                        <br />
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
         </>
     );
 }
